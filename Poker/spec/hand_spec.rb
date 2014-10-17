@@ -124,6 +124,20 @@ RSpec.describe Hand do
   let(:card44) { double("card", value: 5, suit: :club) }
   let(:card45) { double("card", value: 6, suit: :club) }
   
+  #pair2
+  let(:card56) { double("card", value: 10, suit: :club) }
+  let(:card57) { double("card", value: 10, suit: :heart) }
+  let(:card58) { double("card", value: 7, suit: :club) }
+  let(:card59) { double("card", value: 5, suit: :club) }
+  let(:card60) { double("card", value: 8, suit: :club) }
+  
+  #pair3
+  let(:card61) { double("card", value: 11, suit: :club) }
+  let(:card62) { double("card", value: 11, suit: :heart) }
+  let(:card63) { double("card", value: 7, suit: :club) }
+  let(:card64) { double("card", value: 5, suit: :club) }
+  let(:card65) { double("card", value: 8, suit: :club) }
+  
   #mixed
   let(:card46) { double("card", value: 11, suit: :club) }
   let(:card47) { double("card", value: 10, suit: :heart) }
@@ -197,9 +211,30 @@ RSpec.describe Hand do
       expect(hand2.beats?(hand1)).not_to be true
     end
     
-    it "correctly determines winner when hand level is same" do
+    it "correctly determines straght beats pair" do
+      hand1.cards = [card26, card27, card28, card29, card30]  
+      hand2.cards = [card36, card37, card38, card39, card40]
+      
+      expect(hand1.beats?(hand2)).to be true
+    end
+    
+    it "correctly determines winner when hand level is two pair" do
       hand1.cards = [card36, card37, card38, card39, card40]
       hand2.cards = [card51, card52, card53, card54, card55]
+      
+      expect(hand1.beats?(hand2)).to be true
+    end
+    
+    it "correctly determines winner when hand level is pair" do
+      hand1.cards = [card41, card42, card43, card44, card45]
+      hand2.cards = [card56, card57, card58, card59, card60]
+      
+      expect(hand2.beats?(hand1)).to be true
+    end
+    
+    it "correctly determines winner when one pair is bigger than other pair" do
+      hand1.cards = [card61, card62, card63, card64, card65]
+      hand2.cards = [card56, card57, card58, card59, card60]
       
       expect(hand1.beats?(hand2)).to be true
     end

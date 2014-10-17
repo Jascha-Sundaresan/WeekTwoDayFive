@@ -72,16 +72,27 @@ class Hand
         return false
       end
     else
-      #pair
+      if self.pair.more_than?(other_hand.pair)
+        return true
+      elsif self.pair == other_hand.pair
+        our_val_array = sorted_value_array
+        our_pairs = self.pair
+        their_val_array = other_hand.sorted_value_array
+        our_val_array.reject! { |value| our_pairs.include?(value) }
+        their_val_array.reject! { |value| our_pairs.include?(value) }
+        our_val_array.more_than?(their_val_array)
+      else
+        return false
+      end
     end
   end
   
-  24
-  25
-  
   def beats?(other_hand)
-    return beats_tie?(other_hand) if HAND_WORTH[self.worth] == HAND_WORTH[other_hand.worth]
-    HAND_WORTH[self.worth] > HAND_WORTH[other_hand.worth]
+    if HAND_WORTH[self.worth] == HAND_WORTH[other_hand.worth]
+      beats_tie?(other_hand) 
+    else
+      HAND_WORTH[self.worth] > HAND_WORTH[other_hand.worth]
+    end
   end
   
   def unique_hand_biggest
