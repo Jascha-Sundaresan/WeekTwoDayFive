@@ -1,4 +1,6 @@
-require_relative 'deck'
+require_relative 'deck.rb'
+
+
 class Array
   def more_than?(other_arr)
     #only works on sorted arrays
@@ -42,7 +44,15 @@ class Hand
   def draw_from_deck(deck, num)
     @cards += deck.deal_cards(num)
   end
-
+  
+  def to_s
+    output_arr = []
+    @cards.each do |card|
+      output_arr << card.to_s
+    end
+    output_arr.join(", ") + ". Your hand's worth is #{worth.to_s}"
+  end
+  
   def discard(card_pos)
     raise "can't discard more than 3" if card_pos.count > 3
     @cards.reject!.with_index do |card, idx|
